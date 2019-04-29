@@ -5,13 +5,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Gamepad API + NW.js Demo</title>
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
     <style>
-        #ball {
+        #ball-1 {
             position: absolute;
             left: calc(50vw - 25px);
             top: calc(50vh - 25px);
             background-color: red;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+        }
+        #ball-2 {
+            position: absolute;
+            left: calc(50vw - 50px);
+            top: calc(50vh - 25px);
+            background-color: royalblue;
             width: 50px;
             height: 50px;
             border-radius: 25px;
@@ -21,7 +30,7 @@
 
 <body>
 <p>Press a button to activate your game controller.</p>
-<div id="ball"></div>
+<div id="ball-1"></div>
 </body>
 
 </html>

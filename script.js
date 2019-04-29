@@ -1,30 +1,32 @@
 
-var ball;
+var balls = new Array();
 
 window.addEventListener("gamepadconnected", function(e) {
-
-    ball = document.getElementById("ball");
-    ball.style.backgroundColor = "green";
-    document.getElementsByTagName("p")[0].innerHTML = e.gamepad.id;
+    let gp_index = e.gamepad.index+1;
+    let ball = document.getElementById("ball-"+gp_index)
+    console.log('NOU JUGADOR',e.gamepad)
+    balls.push(ball);
+    document.getElementsByTagName("p").innerHTML = e.gamepad.id;
     updateLoop();
-
 });
 
 function updateLoop() {
+    for(let i = 0; i < navigator.getGamepads().length; i++){
+        if(navigator.getGamepads()[i] != null){
+            var left = (navigator.getGamepads()[i].axes[0] + 1) / 2 * (window.innerWidth - balls[navigator.getGamepads()[i].index].offsetWidth);
+            var right = (navigator.getGamepads()[i].axes[1] + 1) / 2 * (window.innerHeight - balls[navigator.getGamepads()[i].index].offsetHeight);
 
-    var gp = navigator.getGamepads()[0];
-    var left = (gp.axes[0] + 1) / 2 * (window.innerWidth - ball.offsetWidth);
-    var right = (gp.axes[1] + 1) / 2 * (window.innerHeight - ball.offsetHeight);
+            balls[navigator.getGamepads()[i].index].style.left = left + "px";
+            balls[navigator.getGamepads()[i].index].style.top =  right + "px";
 
-    ball.style.left = left + "px";
-    ball.style.top =  right + "px";
+            if (navigator.getGamepads()[i].buttons[0].pressed) {
+                document.body.style.backgroundColor = "red";
+            } else {
+                document.body.style.backgroundColor = "white";
+            }
+        }
 
-    if (gp.buttons[0].pressed) {
-        document.body.style.backgroundColor = "red";
-    } else {
-        document.body.style.backgroundColor = "white";
-    }
-
-    requestAnimationFrame(updateLoop);
+        requestAnimationFrame(updateLoop);
+    };
 
 }
